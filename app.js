@@ -8,6 +8,8 @@ const fs = require('fs');
 const https = require('https')
 
 const indexRoutes = require('./src/routes/indexRoutes.js');
+const usersRoutes = require('./src/routes/usersRoutes');
+const privilegesRoutes = require('./src/routes/privilegesRoutes');
 
 // /****************************************** Configuración CORS ***************************************/
 const listaBlanca = ['http://localhost:5173/', 'https://emilixweb.com/'];
@@ -37,6 +39,8 @@ app.use(cors(corsOptions));
 app.use(express.static("public"));
 
 app.use('/', indexRoutes);
+app.use('/users', usersRoutes);
+app.use('/privileges', privilegesRoutes);
 
 // /**************************servidor para https****************** */
 // const port = process.env.PORT || 3000;
