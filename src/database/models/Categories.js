@@ -1,9 +1,9 @@
 module.exports = (sequelize, dataTypes) => {
 
-  let alias = 'Privileges';
+  let alias = 'Categories';
   
     let cols = {
-      id_privileges: {
+      id_category: {
             type: dataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -23,20 +23,20 @@ module.exports = (sequelize, dataTypes) => {
     };
   
     let config = {
-        tableName: 'privileges',
+        tableName: 'categories',
         timestamps: true,
         paranoid: true
     };
   
-    const Privileges = sequelize.define(alias, cols, config)
+    const Categories = sequelize.define(alias, cols, config)
   
-    Privileges.associate = function(models) {
+    Categories.associate = function(models) {
 
-        Privileges.hasMany(models.Users,{
-            foreignKey: 'id_privileges',
-            as: 'users'
+        Categories.hasMany(models.Products,{
+            foreignKey: 'id_category',
+            as: 'products'
         })
     }
   
-    return Privileges;
+    return Categories;
   }

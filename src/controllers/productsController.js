@@ -1,12 +1,7 @@
 const db = require("../database/models");
 const sequelize = db.sequelize;
-const { Op } = require("sequelize");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const { validationResult } = require("express-validator");
 
-//Otra forma de llamar a los modelos
-const Privileges = db.Privileges; //permisos de usuario
+const Products = db.Products;
 
 const controller = {
   list: (req, res) => {
@@ -26,22 +21,21 @@ const controller = {
       size = sizeAsNumber;
     }
 
-    Privileges.findAndCountAll({
-      where: { user_id: req.id_users },
+    Products.findAndCountAll({
       order: [["name"]],
       limit: size,
       offset: page * size,
     })
-      .then((privileges) => {
+      .then((products) => {
         let info = {
           meta: {
             status: 200,
-            total: privileges.count,
-            totalPages: Math.ceil(privileges.count / size),
+            total: products.count,
+            totalPages: Math.ceil(products.count / size),
             size: size,
-            url: "/privileges",
+            url: "/products",
           },
-          data: privileges.rows,
+          data: products.rows,
         };
         return res.status(200).json(info);
       })
@@ -51,29 +45,34 @@ const controller = {
   },
 
   create: (req, res) => {
-    Privileges.findOne({
+    Products.findOne({
       where: {
         name: req.body.name,
       },
     })
-      .then((privilegeInDB) => {
-        if (privilegeInDB) {
+      .then((productInDB) => {
+        if (productInDB) {
           return res.status(401).json({
             error: {
-              privilegeInDB: `Ya existe un permiso de usuario registrado con el nombre: ${req.body.name}`,
+              productInDB: `Ya existe un producto registrad con el nombre: ${req.body.name}`,
             },
           });
         }
-        Privileges.create({
+        Products.create({
           name: req.body.name,
-        }).then((privilege) => {
+          category_id: req.body.category,
+          price: req.body.price,
+          description: req.body.description,
+          image: req.body.image,
+          quantity: req.body.quantity,
+        }).then((product) => {
           let info = {
             meta: {
               status: 200,
-              url: "/privileges/create",
+              url: "/products/create",
             },
             data: {
-              name: privilege.name,
+              name: product.name,
             },
           };
           return res.status(200).json(info);
@@ -85,24 +84,24 @@ const controller = {
   },
 
   update: (req, res) => {
-    Privileges.update(
+    Products.update(
       {
         name: req.body.name,
       },
       {
-        where: { id_privileges: req.params.id },
+        where: { id_product: req.params.id },
       }
     )
       .then((result) => {
-        Privileges.findOne({
-          where: { id_privileges: req.params.id },
-        }).then((privilegeEdited) => {
+        Products.findOne({
+          where: { id_product: req.params.id },
+        }).then((productEdited) => {
           let info = {
             meta: {
               status: 200,
-              url: "/privileges/update/:id/",
+              url: "/products/update/:id/",
             },
-            data: privilegeEdited,
+            data: productEdited,
           };
           return res.status(200).json(info);
         });
@@ -112,13 +111,13 @@ const controller = {
       });
   },
   destroy: (req, res) => {
-    Privileges.destroy({
-      where: { id_privileges: req.params.id },
+    Products.destroy({
+      where: { id_product: req.params.id },
     })
       .then((confirmDestroy) => {
         return res
           .status(200)
-          .json({ message: "permiso de usuario eliminado con éxito" });
+          .json({ message: "producto eliminado con éxito" });
       })
       .catch((error) => {
         console.log(error);

@@ -1,12 +1,7 @@
 const db = require("../database/models");
 const sequelize = db.sequelize;
-const { Op } = require("sequelize");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const { validationResult } = require("express-validator");
 
-//Otra forma de llamar a los modelos
-const Privileges = db.Privileges; //permisos de usuario
+const Categories = db.Categories;
 
 const controller = {
   list: (req, res) => {
@@ -26,22 +21,21 @@ const controller = {
       size = sizeAsNumber;
     }
 
-    Privileges.findAndCountAll({
-      where: { user_id: req.id_users },
+    Categories.findAndCountAll({
       order: [["name"]],
       limit: size,
       offset: page * size,
     })
-      .then((privileges) => {
+      .then((categories) => {
         let info = {
           meta: {
             status: 200,
-            total: privileges.count,
-            totalPages: Math.ceil(privileges.count / size),
+            total: categories.count,
+            totalPages: Math.ceil(categories.count / size),
             size: size,
-            url: "/privileges",
+            url: "/categories",
           },
-          data: privileges.rows,
+          data: categories.rows,
         };
         return res.status(200).json(info);
       })
@@ -51,29 +45,29 @@ const controller = {
   },
 
   create: (req, res) => {
-    Privileges.findOne({
+    Categories.findOne({
       where: {
         name: req.body.name,
       },
     })
-      .then((privilegeInDB) => {
-        if (privilegeInDB) {
+      .then((categoryInDB) => {
+        if (categoryInDB) {
           return res.status(401).json({
             error: {
-              privilegeInDB: `Ya existe un permiso de usuario registrado con el nombre: ${req.body.name}`,
+              categoryInDB: `Ya existe una categoría registrada con el nombre: ${req.body.name}`,
             },
           });
         }
-        Privileges.create({
+        Categories.create({
           name: req.body.name,
-        }).then((privilege) => {
+        }).then((category) => {
           let info = {
             meta: {
               status: 200,
-              url: "/privileges/create",
+              url: "/categories/create",
             },
             data: {
-              name: privilege.name,
+              name: category.name,
             },
           };
           return res.status(200).json(info);
@@ -85,24 +79,24 @@ const controller = {
   },
 
   update: (req, res) => {
-    Privileges.update(
+    Categories.update(
       {
         name: req.body.name,
       },
       {
-        where: { id_privileges: req.params.id },
+        where: { id_category: req.params.id },
       }
     )
       .then((result) => {
-        Privileges.findOne({
-          where: { id_privileges: req.params.id },
-        }).then((privilegeEdited) => {
+        Categories.findOne({
+          where: { id_category: req.params.id },
+        }).then((categoryEdited) => {
           let info = {
             meta: {
               status: 200,
-              url: "/privileges/update/:id/",
+              url: "/categories/update/:id/",
             },
-            data: privilegeEdited,
+            data: categoryEdited,
           };
           return res.status(200).json(info);
         });
@@ -112,13 +106,13 @@ const controller = {
       });
   },
   destroy: (req, res) => {
-    Privileges.destroy({
-      where: { id_privileges: req.params.id },
+    Categories.destroy({
+      where: { id_category: req.params.id },
     })
       .then((confirmDestroy) => {
         return res
           .status(200)
-          .json({ message: "permiso de usuario eliminado con éxito" });
+          .json({ message: "categoría eliminada con éxito" });
       })
       .catch((error) => {
         console.log(error);

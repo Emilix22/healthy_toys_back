@@ -9,9 +9,9 @@ const validationsRegister = [
     body('surname').notEmpty().withMessage('El campo "Apellido" es obligatorio')
      .isLength({min: 2}).withMessage('El campo "Apellido" debe tener como mínimo 2 caracteres'),
 
-    body('dni').notEmpty().withMessage('El campo "DNI" es obligatorio')
-     .isNumeric().withMessage('El campo "DNI" sólo puede contener números')
-     .isLength({min: 8, max: 8}).withMessage("El DNI debe tener 8 caracteres"),
+    // body('dni').notEmpty().withMessage('El campo "DNI" es obligatorio')
+    //  .isNumeric().withMessage('El campo "DNI" sólo puede contener números')
+    //  .isLength({min: 8, max: 8}).withMessage("El DNI debe tener 8 caracteres"),
 
     body('email').notEmpty().withMessage('El campo "Email" es obligatorio')
      .isEmail().withMessage('El email no es válido'),

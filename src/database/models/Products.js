@@ -1,9 +1,9 @@
 module.exports = (sequelize, dataTypes) => {
 
-  let alias = 'Users';
+  let alias = 'Products';
   
     let cols = {
-      id_users: {
+      id_product: {
             type: dataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
@@ -11,22 +11,19 @@ module.exports = (sequelize, dataTypes) => {
         name: {
             type: dataTypes.STRING
         },
-        surname: {
+        category_id: {
+          type: dataTypes.INTEGER
+        },
+        price: {
+          type: dataTypes.FLOAT
+        },
+        description: {
           type: dataTypes.STRING
         },
-        dni: {
+        image: {
           type: dataTypes.STRING
         },
-        email: {
-          type: dataTypes.STRING
-        },
-        password: {
-          type: dataTypes.STRING
-        },
-        avatar: {
-          type: dataTypes.STRING
-        },
-        privileges_id : {
+        quantity: {
           type: dataTypes.INTEGER
         },
         createdAt: {
@@ -41,21 +38,21 @@ module.exports = (sequelize, dataTypes) => {
     };
   
     let config = {
-        tableName: 'users',
+        tableName: 'products',
         timestamps: true,
         paranoid: true
     };
   
-    const Users = sequelize.define(alias, cols, config)
+    const Products = sequelize.define(alias, cols, config)
   
-    Users.associate = function(models) {
+    Products.associate = function(models) {
 
-      Users.belongsTo(models.Privileges,{
-          foreignKey: 'id_privileges',
-          as: 'privileges'
+      Products.belongsTo(models.Categories,{
+          foreignKey: 'id_categories',
+          as: 'categories'
       })
 
     }
   
-    return Users;
+    return Products;
   }
