@@ -33,7 +33,7 @@ module.exports = (sequelize, dataTypes) => {
     Privileges.associate = function(models) {
 
         Privileges.hasMany(models.Users,{
-            foreignKey: 'id_privileges',
+            foreignKey: 'privileges_id',
             as: 'users'
         })
     }

@@ -10,9 +10,11 @@ const https = require('https')
 const indexRoutes = require('./src/routes/indexRoutes.js');
 const usersRoutes = require('./src/routes/usersRoutes');
 const privilegesRoutes = require('./src/routes/privilegesRoutes');
+const categoriesRoutes = require('./src/routes/categoriesRoutes');
+const productsRoutes = require('./src/routes/productsRoutes');
 
 // /****************************************** Configuración CORS ***************************************/
-const listaBlanca = ['http://localhost:5173/', 'https://emilixweb.com/'];
+const listaBlanca = ['http://localhost:5173/', 'https://emilixweb.com/', 'https://healthytoys.com.ar/' ];
 const corsOptions = {
     origin: (origin, callback) => {
         if (listaBlanca.indexOf(origin != -1)) {
@@ -41,6 +43,8 @@ app.use(express.static("public"));
 app.use('/', indexRoutes);
 app.use('/users', usersRoutes);
 app.use('/privileges', privilegesRoutes);
+app.use('/categories', categoriesRoutes);
+app.use('/products', productsRoutes);
 
 // /**************************servidor para https****************** */
 // const port = process.env.PORT || 3000;

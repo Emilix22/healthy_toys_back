@@ -33,7 +33,7 @@ module.exports = (sequelize, dataTypes) => {
     Categories.associate = function(models) {
 
         Categories.hasMany(models.Products,{
-            foreignKey: 'id_category',
+            foreignKey: 'category_id',
             as: 'products'
         })
     }

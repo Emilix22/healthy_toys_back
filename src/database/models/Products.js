@@ -26,6 +26,9 @@ module.exports = (sequelize, dataTypes) => {
         quantity: {
           type: dataTypes.INTEGER
         },
+        promotion: {
+          type: dataTypes.BOOLEAN
+        },
         createdAt: {
             type: dataTypes.DATE
         },
@@ -48,7 +51,7 @@ module.exports = (sequelize, dataTypes) => {
     Products.associate = function(models) {
 
       Products.belongsTo(models.Categories,{
-          foreignKey: 'id_categories',
+          foreignKey: 'category_id',
           as: 'categories'
       })
 

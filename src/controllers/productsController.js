@@ -54,17 +54,25 @@ const controller = {
         if (productInDB) {
           return res.status(401).json({
             error: {
-              productInDB: `Ya existe un producto registrad con el nombre: ${req.body.name}`,
+              productInDB: `Ya existe un producto registrado con el nombre: ${req.body.name}`,
             },
           });
+        }
+        let img;
+
+        if (req.file != undefined) {
+          img = req.file.filename;
+        } else {
+          img = "logoHT.png";
         }
         Products.create({
           name: req.body.name,
           category_id: req.body.category,
           price: req.body.price,
           description: req.body.description,
-          image: req.body.image,
+          image: img,
           quantity: req.body.quantity,
+          promotion: req.body.promotion,
         }).then((product) => {
           let info = {
             meta: {

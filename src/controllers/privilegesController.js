@@ -1,9 +1,6 @@
 const db = require("../database/models");
 const sequelize = db.sequelize;
-const { Op } = require("sequelize");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const { validationResult } = require("express-validator");
 
 //Otra forma de llamar a los modelos
 const Privileges = db.Privileges; //permisos de usuario
