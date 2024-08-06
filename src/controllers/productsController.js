@@ -25,6 +25,7 @@ const controller = {
       order: [["name"]],
       limit: size,
       offset: page * size,
+      include: [{association: 'categories'}]
     })
       .then((products) => {
         let info = {
@@ -58,6 +59,7 @@ const controller = {
             },
           });
         }
+        
         let img;
 
         if (req.file != undefined) {

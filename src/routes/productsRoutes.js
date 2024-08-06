@@ -8,10 +8,10 @@ const validationImage = require ('../middlewares/validationImage')
 const productsController = require('../controllers/productsController');
 
 //Todos los productos
-router.post("/", authMiddleware,  productsController.list);
+router.get("/", productsController.list);
 
 //crear producto
-router.post('/create',  upload.single('image'), validationImage, /*[validationsProduct],*/ productsController.create);
+router.post('/create', authMiddleware, upload.single('image'), validationImage, /*[validationsProduct],*/ productsController.create);
 
 //editar producto
 router.put('/update/:id/', upload.single('image'), validationImage, /*[validationsProduct],*/ productsController.update);
