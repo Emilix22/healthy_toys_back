@@ -19,7 +19,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   req.id_users = decodeToken.id_users;
-
+  req.privileges_id = decodeToken.privileges_id
   next()
 };
 

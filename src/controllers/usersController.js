@@ -63,7 +63,8 @@ const controller = {
                 data: {
                     name: user.name,
                     surname: user.surname,
-                    avatar: user.avatar
+                    avatar: user.avatar,
+                    privileges_id: user.privileges_id
                 }
             }
             return res.status(200).json(info)
@@ -158,6 +159,7 @@ const controller = {
                         dni: userToLogin.dni,
                         email: userToLogin.email,
                         avatar: userToLogin.avatar,
+                        privileges_id: userToLogin.privileges_id,
                     }
                     
                     const token = jwt.sign(

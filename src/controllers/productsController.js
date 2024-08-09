@@ -46,7 +46,8 @@ const controller = {
   },
 
   create: (req, res) => {
-    Products.findOne({
+     req.privileges_id === 1
+     ? Products.findOne({
       where: {
         name: req.body.name,
       },
@@ -90,7 +91,12 @@ const controller = {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+    : res.status(401).json({
+      error: {
+        noAdmin: `No tiene permisos para realizar la acción solicitada`,
+      },
+    });  
   },
 
   update: (req, res) => {
