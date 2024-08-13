@@ -5,7 +5,7 @@ const authMiddleware = require('../middlewares/authMiddleware')
 const categoriesController = require("../controllers/categoriesController");
 
 //Todos los permisos de usuario
-router.post("/", categoriesController.list);
+router.get("/", categoriesController.list);
 
 //crear permiso de usuario
 router.post("/create", authMiddleware, categoriesController.create);
