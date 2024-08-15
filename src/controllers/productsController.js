@@ -60,21 +60,40 @@ const controller = {
             },
           });
         }
-        
-        let img;
+        let img1;
+        let img2;
+        let img3;
+        let img4;
 
-        if (req.file != undefined) {
-          img = req.file.filename;
+        if (req.files.image1) {
+          img1 = req.files.image1[0].filename;
         } else {
-          img = "logoHT.png";
+          img1 = "logoHT.png";
+        }
+        if (req.files.image2) {
+          img2 = req.files.image2[0].filename;
+        } else {
+          img2 = "logoHT.png";
+        }
+        if (req.files.image3) {
+          img3 = req.files.image3[0].filename;
+        } else {
+          img3 = "logoHT.png";
+        }
+        if (req.files.image4) {
+          img4 = req.files.image4[0].filename;
+        } else {
+          img4 = "logoHT.png";
         }
         Products.create({
           name: req.body.name,
           category_id: req.body.category,
           price: req.body.price,
           description: req.body.description,
-          image: img,
-          quantity: req.body.quantity,
+          image1: img1,
+          image2: img2,
+          image3: img3,
+          image4: img4,
           promotion: req.body.promotion,
         }).then((product) => {
           let info = {
@@ -97,6 +116,29 @@ const controller = {
         noAdmin: `No tiene permisos para realizar la acción solicitada`,
       },
     });  
+  },
+
+  detail: (req, res) => {
+    Products.findOne({
+      where: {
+        id_product: req.params.id,
+      },
+      include: [{association: 'categories'}]
+    })
+    .then((product) => {
+      let info = {
+        meta: {
+          status: 200,
+          url: "/products/detail/:id",
+        },
+        data: product,
+      };
+      return res.status(200).json(info);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    //console.log(req.params.id)
   },
 
   update: (req, res) => {

@@ -11,13 +11,16 @@ const productsController = require('../controllers/productsController');
 router.get("/", productsController.list);
 
 //crear producto
-router.post('/create', authMiddleware, upload.single('image'), validationImage, /*[validationsProduct],*/ productsController.create);
+router.post('/create', authMiddleware, upload.fields([{name: 'image1'}, {name: 'image2'}, {name: 'image3'}, {name: 'image4'}]),/*upload.single('image'),*/ validationImage, /*[validationsProduct],*/ productsController.create);
 
 //editar producto
 router.put('/update/:id/', upload.single('image'), validationImage, /*[validationsProduct],*/ productsController.update);
 
 //Eliminar producto
 router.delete('/delete/:id/', productsController.destroy);
+
+//Detalle de producto
+router.get('/detail/:id', productsController.detail);
 
 // //Buscar un producto por DNI
 // router.post('/dni', productsController.findDNI)
@@ -28,8 +31,6 @@ router.delete('/delete/:id/', productsController.destroy);
 // // //Recuperar producto eliminado
 // // router.post('/restore/:id/', usersApiController.restore);
 
-// // //Perfil de producto
-// // router.get('/profile/:id', usersApiController.profile);
 
 // // //Modificar permisos de producto
 // // // router.get('/level/:id/', adminMiddleware, productsController.level);

@@ -20,7 +20,16 @@ module.exports = (sequelize, dataTypes) => {
         description: {
           type: dataTypes.STRING
         },
-        image: {
+        image1: {
+          type: dataTypes.STRING
+        },
+        image2: {
+          type: dataTypes.STRING
+        },
+        image3: {
+          type: dataTypes.STRING
+        },
+        image4: {
           type: dataTypes.STRING
         },
         quantity: {
