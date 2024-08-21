@@ -6,12 +6,14 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const fs = require('fs');
 const https = require('https')
+const mercadopago = require('mercadopago')
 
 const indexRoutes = require('./src/routes/indexRoutes.js');
 const usersRoutes = require('./src/routes/usersRoutes');
 const privilegesRoutes = require('./src/routes/privilegesRoutes');
 const categoriesRoutes = require('./src/routes/categoriesRoutes');
 const productsRoutes = require('./src/routes/productsRoutes');
+const mercadoPagoRoutes = require('./src/routes/mercadoPagoRoutes.js');
 
 // /****************************************** Configuración CORS ***************************************/
 const listaBlanca = ['http://localhost:5173/', 'https://emilixweb.com/', 'https://healthytoys.com.ar/' ];
@@ -45,6 +47,7 @@ app.use('/users', usersRoutes);
 app.use('/privileges', privilegesRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/products', productsRoutes);
+app.use('/mercadoPago', mercadoPagoRoutes);
 
 // /**************************servidor para https****************** */
 // const port = process.env.PORT || 3000;
