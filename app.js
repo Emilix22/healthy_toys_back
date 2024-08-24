@@ -14,6 +14,7 @@ const privilegesRoutes = require('./src/routes/privilegesRoutes');
 const categoriesRoutes = require('./src/routes/categoriesRoutes');
 const productsRoutes = require('./src/routes/productsRoutes');
 const mercadoPagoRoutes = require('./src/routes/mercadoPagoRoutes.js');
+const ordersRoutes = require('./src/routes/ordersRoutes.js');
 
 // /****************************************** Configuración CORS ***************************************/
 const listaBlanca = ['http://localhost:5173/', 'https://emilixweb.com/', 'https://healthytoys.com.ar/' ];
@@ -48,6 +49,7 @@ app.use('/privileges', privilegesRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/products', productsRoutes);
 app.use('/mercadoPago', mercadoPagoRoutes);
+app.use('/orders', ordersRoutes);
 
 // /**************************servidor para https****************** */
 // const port = process.env.PORT || 3000;

@@ -15,7 +15,7 @@ module.exports = (sequelize, dataTypes) => {
           type: dataTypes.INTEGER
         },
         price: {
-          type: dataTypes.FLOAT
+          type: dataTypes.DECIMAL(10, 2)
         },
         description: {
           type: dataTypes.STRING
@@ -31,9 +31,6 @@ module.exports = (sequelize, dataTypes) => {
         },
         image4: {
           type: dataTypes.STRING
-        },
-        quantity: {
-          type: dataTypes.INTEGER
         },
         promotion: {
           type: dataTypes.BOOLEAN

@@ -48,14 +48,16 @@ module.exports = (sequelize, dataTypes) => {
   
     const Users = sequelize.define(alias, cols, config)
   
-    Users.associate = function(models) {
-
-      Users.belongsTo(models.Privileges,{
-          foreignKey: 'privileges_id',
-          as: 'privileges'
-      })
-
-    }
+    Users.associate = function (models) {
+      Users.belongsTo(models.Privileges, {
+        foreignKey: "privileges_id",
+        as: "privileges",
+      }),
+        Users.hasMany(models.Orders, {
+          foreignKey: "user_id",
+          as: "orders",
+        });
+    };
   
     return Users;
   }
