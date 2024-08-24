@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const upload = require('../middlewares/multerProducts');
 const authMiddleware = require('../middlewares/authMiddleware')
+const admMiddleware = require('../middlewares/admMiddleware')
 const validationImage = require ('../middlewares/validationImage')
 // const validationsProduct = require ('../middlewares/validationsProduct')
 
@@ -11,7 +12,7 @@ const productsController = require('../controllers/productsController');
 router.get("/", productsController.list);
 
 //crear producto
-router.post('/create', authMiddleware, upload.fields([{name: 'image1'}, {name: 'image2'}, {name: 'image3'}, {name: 'image4'}]),/*upload.single('image'),*/ validationImage, /*[validationsProduct],*/ productsController.create);
+router.post('/create', authMiddleware, admMiddleware, upload.fields([{name: 'image1'}, {name: 'image2'}, {name: 'image3'}, {name: 'image4'}]), validationImage, /*[validationsProduct],*/ productsController.create);
 
 //editar producto
 router.put('/update/:id/', upload.single('image'), validationImage, /*[validationsProduct],*/ productsController.update);
