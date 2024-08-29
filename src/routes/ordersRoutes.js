@@ -8,6 +8,8 @@ const orderController = require("../controllers/ordersController");
 router.get("/", orderController.list);
 //crear Orden
 router.post("/create", authMiddleware, orderController.create);
+//Detalle de la orden
+router.post('/detail', authMiddleware, orderController.detail);
 
 
 module.exports = router;

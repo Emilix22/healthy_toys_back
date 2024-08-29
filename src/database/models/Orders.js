@@ -15,7 +15,7 @@ module.exports = (sequelize, dataTypes) => {
           type: dataTypes.DECIMAL(10,2)
         },
         shipping_method: {
-          type: dataTypes.STRING
+          type: dataTypes.DECIMAL(10,2)
         },
         createdAt: {
             type: dataTypes.DATE

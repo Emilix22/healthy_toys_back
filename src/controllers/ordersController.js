@@ -47,6 +47,28 @@ const controller = {
       });
   },
 
+  detail: (req, res) => {
+    Orders.findOne({
+      where: {
+        id_order: req.body.id_order,
+      },
+      include: [{association: 'orderItems'}]
+    })
+    .then((order) => {
+      let info = {
+        meta: {
+          status: 200,
+          url: "/orders/detail",
+        },
+        data: order,
+      };
+      return res.status(200).json(info);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  },
+
   create: (req, res) => {
     Orders.create(
       {
