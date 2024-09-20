@@ -17,6 +17,9 @@ module.exports = (sequelize, dataTypes) => {
         shipping_method: {
           type: dataTypes.DECIMAL(10,2)
         },
+        isPaid: {
+          type: dataTypes.BOOLEAN
+        },
         createdAt: {
             type: dataTypes.DATE
         },

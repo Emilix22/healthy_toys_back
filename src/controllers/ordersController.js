@@ -74,7 +74,8 @@ const controller = {
       {
         user_id: req.id_users,
         total: req.body.total,
-        shipping_method: req.body.shipping_method,  
+        shipping_method: req.body.shipping_method,
+        isPaid: false  
       },
       
     )
@@ -85,6 +86,7 @@ const controller = {
               order_id: order.id_order,
               product_id: item.id_product,
               name: item.name,
+              color:item.color,
               price: item.price,
               quantity: item.quantity,
             },

@@ -7,6 +7,9 @@ const client = new mercadopago.MercadoPagoConfig({
   accessToken: process.env.MP_TOKEN,
 });
 
+//Otra forma de llamar a los modelos
+const Orders = db.Orders; 
+
 const controller = {
   preferenceCreate: (req, res) => {
     const preference = new mercadopago.Preference(client);
@@ -31,9 +34,9 @@ const controller = {
             ],
             excluded_payment_types: [
               {
-                id: "ticket"
-              }
-    ],
+                id: "ticket",
+              },
+            ],
             installments: 12,
           },
           items: [
@@ -45,11 +48,13 @@ const controller = {
             },
           ],
           back_urls: {
-            success: "https://healthytoys.com.ar/", //poner la variable env del front
-            failure: "https://healthytoys.com.ar/",
-            pending: "https://healthytoys.com.ar/",
+            success: "https://healthytoys.store/",
+            failure: "https://healthytoys.store/",
+            pending: "https://healthytoys.store/",
           },
           auto_return: "approved",
+          metadata: { id_order: req.body.id_order },
+          notification_url: process.env.MP_URL_WEBHOOK,
         },
       })
       .then((prefe) => {
@@ -62,10 +67,42 @@ const controller = {
       });
   },
 
-  webHook: (req, res) => {
-    console.log(req.body)
-    res.status(200).send("ok")
-  }
-};
+  webHook: async (req, res) => {
+    const paymentId = req.query.id;
 
+    try {
+      const response = await fetch(
+        `https://api.mercadopago.com/v1/payments/${paymentId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${process.env.MP_TOKEN}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (
+          data &&
+          data.status === "approved" &&
+          data.status_detail === "accredited"
+        ) {
+        }
+        Orders.update(
+          {
+            isPaid: true,
+          },
+          {
+            where: { id_order: data.metadata.id_order },
+          }
+        );
+      //mandar email agradeciendo la compra con los datos de lo comprado  
+      }
+      res.sendStatus(200);
+    } catch (error) {
+      console.error("Error:", error);
+      res.sendStatus(500);
+    }
+  },
+};
 module.exports = controller;

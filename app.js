@@ -52,19 +52,16 @@ app.use('/mercadoPago', mercadoPagoRoutes);
 app.use('/orders', ordersRoutes);
 
 // /**************************servidor para https****************** */
-const port = process.env.PORT || 3000;
-https.createServer({
-    cert: fs.readFileSync('../../../etc/letsencrypt/live/tienda.healthytoys.store/fullchain.pem'),
-    key: fs.readFileSync('/etc/letsencrypt/live/tienda.healthytoys.store/privkey.pem')
-//     cert: fs.readFileSync('fullchain.pem'),
-//     key: fs.readFileSync('privkey.pem')
-
-}, app).listen(port, () => {
-    console.log('Servidor corriendo en puerto', port);
-});
+// const port = process.env.PORT || 3000;
+// https.createServer({
+//     cert: fs.readFileSync(process.env.CERT),
+//     key: fs.readFileSync(process.env.KEY)
+// }, app).listen(port, () => {
+//     console.log('Servidor corriendo en puerto', port);
+// });
 /***************************************************************** */
 
-//const port = process.env.PORT || 3000;
-//app.listen(port, () => {
-//    console.log('Servidor corriendo en puerto', port);
-//});
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log('Servidor corriendo en puerto', port);
+});

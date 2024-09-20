@@ -133,3 +133,5 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+ngrok.exe
