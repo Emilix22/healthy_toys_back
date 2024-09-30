@@ -17,7 +17,7 @@ const mercadoPagoRoutes = require('./src/routes/mercadoPagoRoutes.js');
 const ordersRoutes = require('./src/routes/ordersRoutes.js');
 
 // /****************************************** Configuración CORS ***************************************/
-const listaBlanca = ['http://localhost:5173/', 'https://emilixweb.com/', 'https://healthytoys.com.ar/' ];
+const listaBlanca = process.env.CORS_AUTORIZED;
 const corsOptions = {
     origin: (origin, callback) => {
         if (listaBlanca.indexOf(origin != -1)) {

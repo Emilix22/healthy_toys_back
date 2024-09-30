@@ -48,9 +48,9 @@ const controller = {
             },
           ],
           back_urls: {
-            success: "https://healthytoys.store/",
-            failure: "https://healthytoys.store/",
-            pending: "https://healthytoys.store/",
+            success: "https://healthytoys.com.ar/",
+            failure: "https://healthytoys.com.ar/",
+            pending: "https://healthytoys.com.ar/",
           },
           auto_return: "approved",
           metadata: { id_order: req.body.id_order },
