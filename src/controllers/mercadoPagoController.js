@@ -34,7 +34,7 @@ const controller = {
                 id: "tarshop",
               },
             ],
-            installments: 12,
+            installments: 6,
           },
           items: [
             {
@@ -46,26 +46,21 @@ const controller = {
           ],
           shipments: {
             mode: "me2",  // 🚛 modo Mercado Envíos
-            // receiver_address: {
-            //   zip_code: "1834",
-            //   street_name: "ibera",//req.body.address.street_name,
-            //   street_number: 48,//req.body.address.street_number,
-            //   city: {
-            //     name: "lomas de zamora"//req.body.address.city
-            //   }
-            // },
             local_pickup: false,
-            dimensions: "90x90x10,6000", // ancho x alto x largo, peso (cm, gramos)
-            default_shipping_method: 73328, // puede dejarse vacío para que el usuario elija
-            free_methods: [{id: 73328}], // o incluir [ { id: 73328 } ] para promociones de envío gratis
-            zip_code: "1834", // Código postal de origen (CABA por ejemplo)
-            cost: null // si se usa modo me2, esto se calcula 
-          },
-          shipping: {
-            mode: "me2",
-            local_pick_up: false,
-            free_shipping: false,
-            free_methods: [{id: 73328}]
+            dimensions: req.body.dimensions,// ancho x alto x largo, peso (cm, gramos)90x90x10,6000
+            default_shipping_method: null, // puede dejarse vacío para que el usuario elija
+            free_methods: [], // o incluir [ { id: 73328 } ] para promociones de envío gratis
+            //cost: null, // si se usa modo me2, esto se calcula
+            receiver_address: {
+              zip_code: req.body.address.zip_code,
+              street_name: req.body.address.street_name,
+              city_name: req.body.address.city_name,
+              state_name: req.body.address.state_name,
+              street_number: Number(req.body.address.street_number),
+              floor: req.body.address.floor,
+              apartment: req.body.address.apartment, 
+              country_name: req.body.address.country_name,
+            }, 
           },
           back_urls: {
             success: "https://healthytoys.com.ar/",
@@ -134,7 +129,7 @@ const controller = {
       );
       if (response.ok) {
         const data = await response.json();
-        
+        console.log(data)
         if (
           data &&
           data.status === "approved" &&

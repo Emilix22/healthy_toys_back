@@ -7,7 +7,7 @@ const mercadoPagoController = require('../controllers/mercadoPagoController');
 router.post("/create_preference", mercadoPagoController.preferenceCreate);
 
 //Calcular envío mercado envios
-router.post('/calcular_envio', mercadoPagoController.calcularEnvio);
+//router.post('/calcular_envio', mercadoPagoController.calcularEnvio);
 
 //Confirmación pago MP
 router.post("/web_hook", mercadoPagoController.webHook);
